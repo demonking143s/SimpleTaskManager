@@ -1,0 +1,84 @@
+import React, { useEffect, useContext } from 'react'
+import { useParams } from 'react-router-dom'
+import DataContext from '../context/DataContext';
+
+const EditItem = () => {
+    const {items, itemTitle, setItemTitle, itemDes, setItemDes, itemPriority, setItemPriority, itemCurrentValue, setItemCurrentValue, itemFinalValue, setItemFinalValue, handleEdit} = useContext(DataContext)
+    const {id} = useParams();
+    const item = items.find(item => (item.id).toString()===id)
+
+    useEffect(()=>{
+        if(item){
+            setItemTitle(item.itemName);
+            setItemDes(item.description);
+            setItemPriority(item.priority);
+            setItemCurrentValue(item.currentValue);
+            setItemFinalValue(item.finalValue);
+        }
+    },[item,setItemTitle,setItemDes,setItemPriority,setItemCurrentValue,setItemFinalValue])
+    useEffect(()=>{
+        if(parseInt(itemCurrentValue)>parseInt(itemFinalValue)){
+            console.log("Invalid")
+            setItemCurrentValue('')
+            setItemFinalValue('')
+        }
+    },[itemCurrentValue,itemFinalValue])
+  return (
+    <div>
+        <form className='flex flex-col gap-1.5' onSubmit={(e)=>e.preventDefault()}>
+            <label htmlFor='itemTitle'>Title:</label>
+            <input
+                autoFocus
+                id='itemTitle'
+                type='text'
+                placeholder='Enter the title'
+                required
+                value={itemTitle}
+                onChange={(e)=>setItemTitle(e.target.value)}
+            />
+            <label htmlFor='itemDes'>Description:</label>
+            <textarea
+                id='itemDes'
+                placeholder='Enter the description'
+                required
+                value={itemDes}
+                onChange={(e)=>setItemDes(e.target.value)}
+            />
+            <label htmlFor='itemPriority'>Priority:</label>
+            <select
+                id='itemPriority'
+                value={itemPriority}
+                onChange={(e)=>setItemPriority(e.target.value)}
+            >
+                <option value="">Select priority</option>
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+            </select>
+            <label htmlFor='itemFinalValue'>Final Value:</label>
+            <input
+                
+                id='itemFinalValue'
+                type='number'
+                placeholder='Enter the final value'
+                required
+                value={itemFinalValue}
+                onChange={(e)=>setItemFinalValue(e.target.value)}
+            />
+            <label htmlFor='itemCurrentValue'>Current Value:</label>
+            <input
+                
+                id='itemCurrentValue'
+                type='number'
+                placeholder='Enter the current value'
+                required
+                value={itemCurrentValue}
+                onChange={(e)=>setItemCurrentValue(e.target.value)}
+            />
+            <button type='submit' onClick={()=>handleEdit(item.id, item.createdDate)}>Submit</button>
+        </form>
+    </div>
+  )
+}
+
+export default EditItem
