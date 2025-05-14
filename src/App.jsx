@@ -1,11 +1,10 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-// import { format } from 'date-fns'
 import Header from './components/Header'
 import Body from './pages/Body'
 import { Route, Routes} from 'react-router-dom'
 import ViewList from './pages/viewList';
-import AddItem from './pages/addItem';
+import AddItem from './pages/AddItem';
 import Missing from './pages/Missing';
 import EditItem from './pages/EditItem'
 import {DataProvider} from './context/DataContext'

@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react'
-import Item from '../components/Item'
 import DataContext from '../context/DataContext'
 
 const AddItem = () => {
